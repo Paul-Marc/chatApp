@@ -11,9 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-    <form>
-        Username: <input type="text" name="username"/>
-        Password: <input type="password" name="password"/>
-    </form>
+
+<form action="servlets/TestLoading" method="post">
+    <input type="submit" value="load">
+</form>
+
+<form>
+    Username: <input type="text" name="username"/>
+    Password: <input type="password" name="password"/>
+</form>
 </body>
 </html>
