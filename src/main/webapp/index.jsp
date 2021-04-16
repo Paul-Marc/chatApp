@@ -16,7 +16,7 @@
     <input type="submit" value="load">
 </form>
 
-<form>
+<form action="servlets/LoginServlet" method="post">
     Username: <input type="text" name="username"/>
     Password: <input type="password" name="password"/>
 </form>
