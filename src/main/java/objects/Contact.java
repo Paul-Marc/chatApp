@@ -1,18 +1,22 @@
 package objects;
 
-import java.awt.image.BufferedImage;
-
 public class Contact {
-    private User user;
+    private String userName;
     private String bio;
+    private int roomID;
 
-    public Contact(User user, String bio) {
-        this.user = user;
+    public Contact(String userName, String bio, int roomID) {
+        this.userName = userName;
         this.bio = bio;
+        this.roomID = roomID;
     }
 
     public String getUserName() {
-        return user.getUserName();
+        return userName;
+    }
+
+    public int getRoomID() {
+        return roomID;
     }
 
     public String getBio() {

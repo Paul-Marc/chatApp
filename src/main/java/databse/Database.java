@@ -1,5 +1,8 @@
 package databse;
 
+import objects.Contact;
+import objects.Message;
+import objects.User;
 
 import java.sql.*;
 
@@ -76,7 +79,56 @@ public class Database {
         return success;
     }
 
-    public static boolean getUser() {
-        return false;
+    public static User getUser(String userName, String password) {
+        User user = null;
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT username, password FROM users WHERE username = ?;");
+            statement.setString(1, userName);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                if (password.equals(resultSet.getString("password"))) {
+                    user = new User(userName);
+                } else {
+                    System.out.println("no match");
+                    return null;
+                }
+
+
+                statement = connection.prepareStatement("SELECT roomid FROM rooms WHERE member LIKE ?;");
+                statement.setString(1, "'%" +userName +"%'");
+                resultSet = statement.executeQuery();
+                System.out.println(resultSet.getString("member"));
+
+                while (resultSet.next()) {
+                    int roomID = resultSet.getInt("roomid");
+                    String secondUser = resultSet.getString("member");
+                    secondUser = secondUser.replace(" " , "");
+                    secondUser = secondUser.replace(userName, "");
+                    Contact newContact = new Contact(secondUser, "bio", roomID);
+                    user.addContact(newContact);
+                }
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return user;
+    }
+
+    public static boolean addMessage(Message message) {
+        boolean succsess = false;
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO messages (message, ownername, roomid, date) VALUES (?, ?, ?)");
+            statement.setString(1, message.getMessage());
+            statement.setString(2, message.getOwner().getUserName());
+            statement.setInt(3, message.getRoomID());
+            statement.executeUpdate();
+            succsess = true;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return succsess;
     }
 }
