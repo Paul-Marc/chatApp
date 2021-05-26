@@ -6,6 +6,7 @@ import objects.User;
 
 import java.sql.*;
 
+//test
 public class Database {
     protected static Connection connection;
     private static final String DB_Server = "localhost:5432";
