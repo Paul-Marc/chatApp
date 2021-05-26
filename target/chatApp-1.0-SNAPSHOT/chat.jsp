@@ -59,8 +59,6 @@
                     <input type="submit" name="Start Chating">
                 </form>
             </td>
-
-
         </tr>
     </table>
     <%}%>
