@@ -35,7 +35,7 @@ public class Database {
             return init();
         }
     }
-    //Schließt die Connection
+
     public static void closeConnection() {
         try {
             connection.close();
