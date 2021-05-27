@@ -22,12 +22,12 @@
         <% for (int i = 0; i < messages.size(); i++) { %>
         <tr>
             <td class="other">
-                <% if (messages.get(i).getOwner().getUserName() != user.getUserName()) {%>
+                <% if (messages.get(i).getOwner() != user.getUserName()) {%>
                 <%out.print(messages.get(i).getMessage());%>
                 <%}%>
             </td>
             <td class="my">
-                <% if (messages.get(i).getOwner().getUserName() == user.getUserName()) {%>
+                <% if (messages.get(i).getOwner() == user.getUserName()) {%>
                 <%out.print(messages.get(i).getMessage());%>
                 <%}%>
             </td>

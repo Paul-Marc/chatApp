@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class NewMessageServelet extends HttpServlet {
         }
 
         if (req.getParameter("newMessage") != null) {
-            Message newMessage = new Message(req.getParameter("newMessage"), user, System.currentTimeMillis());
+            Message newMessage = new Message(user.getCurrentContact().getRoomID(), req.getParameter("newMessage"), user.getUserName(), new Timestamp(System.currentTimeMillis()));
             messages.add(newMessage);
             Database.addMessage(newMessage);
         }

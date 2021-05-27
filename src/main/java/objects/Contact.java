@@ -22,4 +22,13 @@ public class Contact {
     public String getBio() {
         return bio;
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "userName='" + userName + '\'' +
+                ", bio='" + bio + '\'' +
+                ", roomID=" + roomID +
+                '}';
+    }
 }

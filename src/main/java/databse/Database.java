@@ -1,10 +1,13 @@
 package databse;
 
+import exceptions.NameNotFoundException;
 import objects.Contact;
 import objects.Message;
 import objects.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //test
 public class Database {
@@ -80,7 +83,7 @@ public class Database {
         return success;
     }
 
-    public static User getUser(String userName, String password) {
+    public static User getUser(String userName, String password) throws NameNotFoundException {
         User user = null;
         try {
             Connection connection = Database.getConnection();
@@ -91,40 +94,91 @@ public class Database {
                 if (password.equals(resultSet.getString("password"))) {
                     user = new User(userName);
                 } else {
-                    System.out.println("no match");
-                    return null;
+                    throw new NameNotFoundException();
                 }
+            }
+            user.setContacts(getContacts(userName));
+            user.setMessages(getChat(user.getCurrentContact().getRoomID()));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println(user.toString());
+        return user;
+    }
 
-
-                statement = connection.prepareStatement("SELECT roomid FROM rooms WHERE member LIKE ?;");
-                statement.setString(1, "'%" +userName +"%'");
-                resultSet = statement.executeQuery();
-                System.out.println(resultSet.getString("member"));
-
-                while (resultSet.next()) {
-                    int roomID = resultSet.getInt("roomid");
-                    String secondUser = resultSet.getString("member");
-                    secondUser = secondUser.replace(" " , "");
-                    secondUser = secondUser.replace(userName, "");
-                    Contact newContact = new Contact(secondUser, "bio", roomID);
-                    user.addContact(newContact);
+    public static List<Contact> getContacts(String userName) {
+        List<Contact> result = new ArrayList<Contact>();
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT roomid, member FROM rooms WHERE member LIKE ?;");
+            statement.setString(1, "%" +userName +"%");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println("hit");
+                String[] member = resultSet.getString("member").split(",");
+                int roomID = resultSet.getInt("roomid");
+                int otherUserIndex;
+                if (member[0].equals(userName)) {
+                    otherUserIndex = 1;
+                } else {
+                    otherUserIndex = 0;
                 }
-
+                result.add(new Contact(member[otherUserIndex], "", roomID));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return user;
+        return result;
+    }
+
+    public static int getUserID(String userName) {
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT userid FROM users WHERE  username = ?;");
+            statement.setString(1, userName);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int userid = resultSet.getInt("userid");
+                return userid;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static List<Message> getChat(int roomid) {
+        List<Message> messages = new ArrayList<Message>();
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT message, ownername, time FROM messages WHERE roomid = ? ORDER BY messageid");
+            statement.setInt(1, roomid);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String messageText = resultSet.getString("message");
+                String ownerName = resultSet.getString("ownername");
+                Timestamp time = resultSet.getTimestamp("time");
+                messages.add(new Message(roomid, messageText, ownerName, time));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return messages;
     }
 
     public static boolean addMessage(Message message) {
         boolean succsess = false;
         try {
             Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO messages (message, ownername, roomid, date) VALUES (?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO messages (message, ownername, roomid, time) VALUES (?, ?, ?, ?)");
             statement.setString(1, message.getMessage());
-            statement.setString(2, message.getOwner().getUserName());
+            statement.setString(2, message.getOwner());
             statement.setInt(3, message.getRoomID());
+            statement.setTimestamp(4, message.getTimeStamp());
             statement.executeUpdate();
             succsess = true;
         } catch (SQLException sqlException) {

@@ -1,15 +1,18 @@
 package objects;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
 public class Message {
     private String message;
-    private User owner;
+    private String owner;
+    private Timestamp timeStamp;
     private int roomID;
-    private long timeStamp;
 
-    public Message(String message, User owner, long timeStamp) {
+    public Message(int roomID, String message, String owner, Timestamp timeStamp) {
         this.message = message;
         this.owner = owner;
-        this.roomID = owner.getCurrentContact().getRoomID();
+        this.roomID = roomID;
         this.timeStamp = timeStamp;
     }
 
@@ -21,11 +24,11 @@ public class Message {
         return roomID;
     }
 
-    public long getTimeStamp() {
+    public Timestamp getTimeStamp() {
         return timeStamp;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 }

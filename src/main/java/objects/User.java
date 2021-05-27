@@ -18,6 +18,9 @@ public class User {
 
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
+        if (!contacts.isEmpty()) {
+            currentContact = contacts.get(0);
+        }
     }
 
     public void addContact(Contact contact) {
@@ -47,5 +50,15 @@ public class User {
 
     public String getUserName() {
         return userName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", contacts=" + contacts.toString() +
+                ", messages=" + messages +
+                ", currentContact=" + currentContact +
+                '}';
     }
 }

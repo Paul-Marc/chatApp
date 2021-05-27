@@ -20,9 +20,6 @@
     <div id="password_box"><p id="password_text">Password:</p> <input type="password" name="password"/></div>
 </form>
 
-    <form id="load_button" action="servlets/TestLoading" method="post">
-        <input type="submit" value="load">
-    </form>
     <p id="registrieren_text">Du hast noch keinen Account? <a href="register.jsp">Hier registrieren</a></p>
 </div>
 </body>
