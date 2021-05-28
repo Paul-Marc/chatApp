@@ -10,6 +10,7 @@
 <head>
     <title>chatApp</title>
     <link rel="stylesheet" href="css/style_index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
@@ -18,6 +19,7 @@
 <form action="servlets/LoginServlet" method="post">
     <div id="username_box"><p id="username_text">Username:</p> <input type="text" name="username"/> </div><br/>
     <div id="password_box"><p id="password_text">Password:</p> <input type="password" name="password"/></div>
+    <input id="login_button" type="submit" value="Anmelden">
 </form>
 
     <p id="registrieren_text">Du hast noch keinen Account? <a href="register.jsp">Hier registrieren</a></p>

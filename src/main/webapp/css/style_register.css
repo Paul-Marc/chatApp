@@ -1,23 +1,22 @@
-#username_box, #password_box {
+#username_box, #password_box, #repeat_password_box {
     width: fit-content;
     height: fit-content;
     padding: 10px 10px 10px 10px;
 }
 
 
-
-#registrieren_text {
+#login_text {
     font-family: "Times New Roman";
     font-size: 20px;
     font-weight: 300;
     color: dimgray;
 }
 
-#registrieren_text a {
+#login_text a {
     text-decoration: none;
 }
 
-#login_form {
+#register_form {
     width: fit-content;
     margin-top: 30vh;
     margin-left: 40%;
@@ -37,7 +36,7 @@ input {
     color: dimgray;
 }
 
-#username_text, #password_text {
+#username_text, #password_text, #repeat_password_text {
     font-size: 25px;
     font-weight: bold;
     color: dimgray;
@@ -53,10 +52,9 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    width: 100%;
 }
 
-#login_button {
+#registrieren_button {
     height: 60px;
     margin: 20px 0px 0px 10px;
     border: 2px solid lightcoral;
