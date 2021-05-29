@@ -31,12 +31,13 @@ public class RegisterServlet extends HttpServlet {
             try {
                 User user = Database.getUser(userName, password);
                 session.setAttribute("user", user);
+                resp.sendRedirect(req.getContextPath() + "/chat.jsp");
             } catch (NameNotFoundException e) {
                 e.printStackTrace();
                 e.sendError();
+                resp.sendRedirect(req.getContextPath() + "/register.jsp");
             }
         }
-        resp.sendRedirect(req.getContextPath() +"/chat.jsp");
     }
 
 
