@@ -37,6 +37,9 @@ public class RegisterServlet extends HttpServlet {
                 e.sendError();
                 resp.sendRedirect(req.getContextPath() + "/register.jsp");
             }
+        } else {
+            //Exception noch ausdenken
+            resp.sendRedirect(req.getContextPath() + "/register.jsp");
         }
     }
 

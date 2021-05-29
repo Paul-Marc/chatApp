@@ -90,7 +90,7 @@ public class User {
                 return true;
             }
         }
-        throw new ContactAlreadyExistsException();
+        return false;
     }
 
     public boolean setCurrentContact(int roomid) {
