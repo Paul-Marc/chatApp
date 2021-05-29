@@ -84,7 +84,7 @@ public class User {
         return false;
     }
 
-    public boolean contactAlreadyExists(String userName) throws ContactAlreadyExistsException {
+    public boolean contactAlreadyExists(String userName) {
         for (int i = 0; i < getContacts().size(); i++) {
             if (getContacts().get(i).getUserName().equals(userName)) {
                 return true;
