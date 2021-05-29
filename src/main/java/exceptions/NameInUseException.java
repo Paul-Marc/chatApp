@@ -5,4 +5,7 @@ public class NameInUseException extends Exception{
     public String getMessage() {
         return text;
     }
+    public void sendError() {
+        System.out.println("Error");
+    }
 }

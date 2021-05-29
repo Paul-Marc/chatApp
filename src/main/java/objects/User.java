@@ -1,7 +1,9 @@
 package objects;
 
 import databse.Database;
+import exceptions.ContactNotFoundException;
 
+import javax.naming.ContextNotEmptyException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,16 @@ public class User {
         }
     }
 
+    public void updateMessages() {
+        if (getCurrentContact() != null) {
+            messages = Database.getMessagesFromRoom(getCurrentContact().getRoomID());
+        }
+    }
+
+    public void updateContacts() {
+        setContacts(Database.getContacts(this.userName));
+    }
+
     public void addContact(Contact contact) {
         contacts.add(contact);
         setCurrentContact(contact);
@@ -42,11 +54,29 @@ public class User {
         return currentContact;
     }
 
+    public Contact getContact(String userName) throws ContactNotFoundException {
+        for (int i = 0; i < getContacts().size(); i++) {
+            if (getContacts().get(i).getUserName().equals(userName)) {
+                return getContacts().get(i);
+            }
+        }
+        throw new ContactNotFoundException();
+    }
+
+    public Contact getContact(int roomID) throws ContactNotFoundException {
+        for (int i = 0; i < getContacts().size(); i++) {
+            if (getContacts().get(i).getRoomID() == roomID)  {
+                return getContacts().get(i);
+            }
+        }
+        throw new ContactNotFoundException();
+    }
+
     public boolean setCurrentContact(Contact contact) {
         for (int i = 0; i < getContacts().size(); i++) {
             if (getContacts().get(i).getRoomID() == contact.getRoomID()) {
                 currentContact = contact;
-                messages = Database.getChat(contact.getRoomID());
+                messages = Database.getMessagesFromRoom(contact.getRoomID());
                 return true;
             }
         }

@@ -18,10 +18,6 @@ import java.util.List;
 
 @WebServlet (name = "NewMessageServelet", value = "/servlets/NewMessageServelet")
 public class NewMessageServelet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

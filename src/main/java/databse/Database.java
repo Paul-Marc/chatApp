@@ -1,5 +1,6 @@
 package databse;
 
+import exceptions.NameInUseException;
 import exceptions.NameNotFoundException;
 import objects.Contact;
 import objects.Message;
@@ -9,7 +10,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//test
 public class Database {
     protected static Connection connection;
     private static final String DB_Server = "localhost:5432";
@@ -48,41 +48,6 @@ public class Database {
         }
     }
 
-    public static Boolean isUserNameAvailable(String userName) {
-        try {
-            Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT username FROM users WHERE username = ?;");
-            statement.setString(1, userName);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                return false;
-            }
-
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return true;
-    }
-
-    public static boolean addUser(String userName, String password) {
-        boolean success = false;
-        if (!isUserNameAvailable(userName)) {
-            return success;
-        }
-        try {
-            Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO users (username, password) VALUES (?, ?);");
-            statement.setString(1, userName);
-            statement.setString(2, password);
-            statement.executeUpdate();
-            success = true;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return success;
-    }
-
     public static User getUser(String userName, String password) throws NameNotFoundException {
         User user = null;
         try {
@@ -101,7 +66,66 @@ public class Database {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        Database.closeConnection();
         return user;
+    }
+
+    public static boolean addUser(String userName, String password) {
+        boolean success = false;
+        if (doesUserExists(userName)) {
+            Database.closeConnection();
+            return success;
+        }
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO users (username, password) VALUES (?, ?);");
+            statement.setString(1, userName);
+            statement.setString(2, password);
+            statement.executeUpdate();
+            success = true;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        Database.closeConnection();
+        return success;
+    }
+
+    public static boolean doesUserExists(String userName){
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+            statement.setString(1, userName);
+            ResultSet resultSet = statement.executeQuery();
+            Database.closeConnection();
+            if (resultSet.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+
+    public static int getUserID(String userName) {
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT userid FROM users WHERE  username = ?;");
+            statement.setString(1, userName);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int userid = resultSet.getInt("userid");
+                Database.closeConnection();
+                return userid;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Database.closeConnection();
+        return -1;
     }
 
     public static List<Contact> getContacts(String userName) {
@@ -109,7 +133,7 @@ public class Database {
         try {
             Connection connection = Database.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT roomid, member FROM rooms WHERE member LIKE ?;");
-            statement.setString(1, "%" +userName +"%");
+            statement.setString(1, "%" + userName + "%");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String[] member = resultSet.getString("member").split(",");
@@ -125,28 +149,11 @@ public class Database {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        Database.closeConnection();
         return result;
     }
 
-    public static int getUserID(String userName) {
-        try {
-            Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT userid FROM users WHERE  username = ?;");
-            statement.setString(1, userName);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                int userid = resultSet.getInt("userid");
-                return userid;
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return -1;
-    }
-
-    public static List<Message> getChat(int roomid) {
+    public static List<Message> getMessagesFromRoom(int roomid) {
         List<Message> messages = new ArrayList<Message>();
         try {
             Connection connection = Database.getConnection();
@@ -164,7 +171,31 @@ public class Database {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        Database.closeConnection();
         return messages;
+    }
+
+    public static boolean addRoom(String[] member) {
+        try {
+            for (int i = 0; i < member.length; i++) {
+                if (!doesUserExists(member[i])) {
+                    System.out.println("hit");
+                    return false;
+                }
+            }
+            Connection connection = Database.getConnection();
+            String memberString = "";
+            for (int i = 0; i < member.length; i++) {
+                memberString += member[i] + ",";
+            }
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO rooms (member) VALUES (?);");
+            statement.setString(1, memberString);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean addMessage(Message message) {
@@ -181,6 +212,7 @@ public class Database {
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
+        Database.closeConnection();
         return succsess;
     }
 }

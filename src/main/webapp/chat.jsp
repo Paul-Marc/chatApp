@@ -61,6 +61,13 @@
     </table>
     <%}%>
     <%}%>
+</div>
+
+<div class="addContactBox">
+    <form action="servlets/AddContactServlet">
+        <input type="text" name="userName">
+        <input type="submit" value="Add to Contacts">
+    </form>
 
 </div>
 
