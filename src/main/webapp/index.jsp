@@ -16,7 +16,7 @@
 
 
 <div id="login_form">
-<form action="servlets/LoginServlet" method="post">
+<form action="servlets/Loginservlet" method="post">
     <div id="username_box"><p id="username_text">Username:</p> <input type="text" name="username"/> </div><br/>
     <div id="password_box"><p id="password_text">Password:</p> <input type="password" name="password"/></div>
     <input id="login_button" type="submit" value="Anmelden">
