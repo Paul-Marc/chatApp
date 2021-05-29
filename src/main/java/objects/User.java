@@ -1,6 +1,7 @@
 package objects;
 
 import databse.Database;
+import exceptions.ContactAlreadyExistsException;
 import exceptions.ContactNotFoundException;
 
 import javax.naming.ContextNotEmptyException;
@@ -81,6 +82,15 @@ public class User {
             }
         }
         return false;
+    }
+
+    public boolean contactAlreadyExists(String userName) throws ContactAlreadyExistsException {
+        for (int i = 0; i < getContacts().size(); i++) {
+            if (getContacts().get(i).getUserName().equals(userName)) {
+                return true;
+            }
+        }
+        throw new ContactAlreadyExistsException();
     }
 
     public boolean setCurrentContact(int roomid) {
