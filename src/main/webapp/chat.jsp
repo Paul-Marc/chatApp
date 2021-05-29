@@ -51,12 +51,10 @@
     <table class="contactTable" border="1">
         <tr>
             <td>
-                PB
-            </td>
-            <td>
                 <form action="servlets/LoadContactServlet" method="post">
                     <%out.print(contacts.get(i).getUserName());%>
-                    <input type="submit" name="Start Chating">
+                    <input type="hidden" value="<%out.print(contacts.get(i).getRoomID());%>" name="roomid">
+                    <input type="submit" value="Start Chating">
                 </form>
             </td>
         </tr>

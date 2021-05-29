@@ -1,5 +1,7 @@
 package objects;
 
+import databse.Database;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class User {
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
         if (!contacts.isEmpty()) {
-            currentContact = contacts.get(0);
+            setCurrentContact(contacts.get(0));
         }
     }
 
@@ -36,16 +38,28 @@ public class User {
         return messages;
     }
 
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
-
     public Contact getCurrentContact() {
         return currentContact;
     }
 
-    public void setCurrentContact(Contact contact) {
-        currentContact = contact;
+    public boolean setCurrentContact(Contact contact) {
+        for (int i = 0; i < getContacts().size(); i++) {
+            if (getContacts().get(i).getRoomID() == contact.getRoomID()) {
+                currentContact = contact;
+                messages = Database.getChat(contact.getRoomID());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean setCurrentContact(int roomid) {
+        for (int i = 0; i < getContacts().size(); i++) {
+            if (getContacts().get(i).getRoomID() == roomid) {
+                return setCurrentContact(getContacts().get(i));
+            }
+        }
+        return false;
     }
 
     public String getUserName() {

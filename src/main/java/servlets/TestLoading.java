@@ -30,6 +30,7 @@ public class TestLoading extends HttpServlet {
             user = Database.getUser("user", "123");
         } catch (NameNotFoundException e) {
             e.printStackTrace();
+            e.sendError();
         }
         session.setAttribute("user", user);
 

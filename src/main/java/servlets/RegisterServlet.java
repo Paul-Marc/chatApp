@@ -22,8 +22,6 @@ public class RegisterServlet extends HttpServlet {
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeatPassword");
 
-        System.out.println("hit");
-
         if (password.equals(repeatPassword)) {
             System.out.println(Database.addUser(userName, password));
         }

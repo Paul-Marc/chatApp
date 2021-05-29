@@ -98,11 +98,9 @@ public class Database {
                 }
             }
             user.setContacts(getContacts(userName));
-            user.setMessages(getChat(user.getCurrentContact().getRoomID()));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println(user.toString());
         return user;
     }
 
@@ -114,7 +112,6 @@ public class Database {
             statement.setString(1, "%" +userName +"%");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                System.out.println("hit");
                 String[] member = resultSet.getString("member").split(",");
                 int roomID = resultSet.getInt("roomid");
                 int otherUserIndex;

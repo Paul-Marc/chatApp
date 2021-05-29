@@ -31,6 +31,7 @@ public class LoginServlet  extends HttpServlet {
             user = Database.getUser(userName, pw);
         } catch (NameNotFoundException e) {
             e.printStackTrace();
+            e.sendError();
         }
         session.setAttribute("user", user);
 
