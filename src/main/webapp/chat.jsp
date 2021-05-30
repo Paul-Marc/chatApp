@@ -7,27 +7,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>ChatApp</title>
+    <link rel="stylesheet" href="css/style_chat.css">
     <% User user = (User) session.getAttribute("user");%>
     <% List<Message> messages = user.getMessages();%>
     <% List<Contact> contacts = user.getContacts();%>
 </head>
 <body>
-<h1><%= "Messages" %>
-</h1>
+
+<div class="addContactBox">
+    <form action="servlets/AddContactServlet">
+        <input type="text" name="userName">
+        <input type="submit" value="Add to Contacts">
+    </form>
+</div>
+
+<div id="content_box">
 <div class="chatBox">
+   <h1>Chatte mit <%= user.getCurrentContact().getUserName() %></h1>
     <table class="messageTable" border="1">
         <% if (messages != null) {%>
         <% for (int i = 0; i < messages.size(); i++) { %>
         <tr>
             <td class="other">
                 <% if (messages.get(i).getOwner() != user.getUserName()) {%>
+                <%out.print(user.getCurrentContact().getUserName() + ": "); %>
                 <%out.print(messages.get(i).getMessage());%>
                 <%}%>
             </td>
             <td class="my">
                 <% if (messages.get(i).getOwner() == user.getUserName()) {%>
+                <%out.print(user.getUserName() + ": "); %>
                 <%out.print(messages.get(i).getMessage());%>
                 <%}%>
             </td>
@@ -38,9 +48,9 @@
         %>
     </table>
 
-    <form action="servlets/NewMessageServelet" method="post">
-        <input type="text" name="newMessage">
-        <input type="submit" value="Abschicken">
+    <form id="send_massage" action="servlets/NewMessageServelet" method="post">
+        <input id="enter_a_new_massage" type="text" name="newMessage">
+        <input id="send_a_new_massage" type="submit" value="Abschicken">
     </form>
 </div>
 
@@ -52,9 +62,8 @@
         <tr>
             <td>
                 <form action="servlets/LoadContactServlet" method="post">
-                    <%out.print(contacts.get(i).getUserName());%>
                     <input type="hidden" value="<%out.print(contacts.get(i).getRoomID());%>" name="roomid">
-                    <input type="submit" value="Start Chating">
+                    <input type="submit" class="contact_button" value="<%out.print(contacts.get(i).getUserName());%>">
                 </form>
             </td>
         </tr>
@@ -62,14 +71,8 @@
     <%}%>
     <%}%>
 </div>
-
-<div class="addContactBox">
-    <form action="servlets/AddContactServlet">
-        <input type="text" name="userName">
-        <input type="submit" value="Add to Contacts">
-    </form>
-
 </div>
+
 
 
 </body>
