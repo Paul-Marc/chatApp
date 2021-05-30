@@ -155,6 +155,7 @@ public class Database {
 
     public static List<Message> getMessagesFromRoom(int roomid) {
         List<Message> messages = new ArrayList<Message>();
+        System.out.println(roomid);
         try {
             Connection connection = Database.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT message, ownername, time FROM messages WHERE roomid = ? ORDER BY messageid");
@@ -164,6 +165,7 @@ public class Database {
             while (resultSet.next()) {
                 String messageText = resultSet.getString("message");
                 String ownerName = resultSet.getString("ownername");
+                ownerName = ownerName.replace(",", "");
                 Timestamp time = resultSet.getTimestamp("time");
                 messages.add(new Message(roomid, messageText, ownerName, time));
             }

@@ -30,13 +30,13 @@
         <% for (int i = 0; i < messages.size(); i++) { %>
         <tr>
             <td class="other">
-                <% if (messages.get(i).getOwner() != user.getUserName()) {%>
-                <%out.print(user.getCurrentContact().getUserName() + ": "); %>
+                <% if (!messages.get(i).getOwner().equals(user.getUserName())) {%>
+                <%out.print(messages.get(i).getOwner() + ": "); %>
                 <%out.print(messages.get(i).getMessage());%>
                 <%}%>
             </td>
             <td class="my">
-                <% if (messages.get(i).getOwner() == user.getUserName()) {%>
+                <% if (messages.get(i).getOwner().equals(user.getUserName())) {%>
                 <%out.print(user.getUserName() + ": "); %>
                 <%out.print(messages.get(i).getMessage());%>
                 <%}%>
