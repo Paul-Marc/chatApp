@@ -24,7 +24,7 @@
 
 <div id="content_box">
 <div class="chatBox">
-   <h1>Chatte mit <%= user.getCurrentContact().getUserName() %></h1>
+   <h1>Chatte mit ${user.getCurrentContact().getUserName()}</h1>
     <table class="messageTable" border="1">
         <% if (messages != null) {%>
         <% for (int i = 0; i < messages.size(); i++) { %>
