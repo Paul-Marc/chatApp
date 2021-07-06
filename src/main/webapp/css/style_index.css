@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 100%;
 }
 #login_form {
     display: flex;
@@ -12,6 +13,7 @@
     border-radius: 10px;
     align-items: center;
     background-color: white;
+    max-width: 100%;
 }
 
 #registrieren_text {
@@ -35,6 +37,8 @@
 
 #username_input {
     width: 100%;
+    height: 30px;
+    border: 1px solid gray;
 }
 
 
@@ -44,11 +48,18 @@
 
 #password_input {
     width: 100%;
+    height: 30px;
+    border: 1px solid gray;
 }
 
 
 #login_button {
-
+    margin: 10px;
+    width: 90%;
+    height: 30px;
+    background-color: lightgoldenrodyellow;
+    border: 1px solid gray;
+    cursor: pointer;
 }
 
 

@@ -20,6 +20,7 @@
     <div id="username_box"><p id="username_text">Username:</p> <input id="username_input" type="text" name="username"/> </div><br/>
     <div id="password_box"><p id="password_text">Password:</p> <input id="password_input" type="password" name="password"/></div>
     <input id="login_button" type="submit" value="Anmelden">
+    <p style="color: darkred">${ loginerror }</p>
     <p id="registrieren_text">Du hast noch keinen Account? <a href="register.jsp">Hier registrieren</a></p>
 </form>
 

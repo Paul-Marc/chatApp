@@ -1,6 +1,7 @@
 package servlets;
 
 import databse.Database;
+import exceptions.InvalidInputException;
 import exceptions.NameNotFoundException;
 import objects.User;
 
@@ -28,18 +29,22 @@ public class LoginServlet  extends HttpServlet {
             if(userName.length() > 0 && pw.length() > 0) {
                 try{
                     user = Database.getUser(userName, pw);
+                    System.out.println("Das PW lautet:" + user.getPassword());
+                    session.setAttribute("userpw",user.getPassword());
+                    System.out.println(user.toString());
+                    System.out.println(user.getBiography());
+                    System.out.println(user.getDateOfBirth());
+                    session.setAttribute("user", user);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    session.setAttribute("loginerror", new InvalidInputException().getMessage());
+                    resp.sendRedirect(req.getContextPath() +"/index.jsp");
+                    return;
                 }
 
-                System.out.println("Das PW lautet:" + user.getPassword());
-                session.setAttribute("userpw",user.getPassword());
-                System.out.println(user.toString());
-                System.out.println(user.getBiography());
-                System.out.println(user.getDateOfBirth());
-                session.setAttribute("user", user);
+
             } else {
-                System.out.println("Password oder Username ist zu kurz.");
+                session.setAttribute("loginerror", new InvalidInputException().getMessage());
                 resp.sendRedirect(req.getContextPath() +"/index.jsp");
                 return;
 
@@ -51,6 +56,7 @@ public class LoginServlet  extends HttpServlet {
 
             resp.sendRedirect(req.getContextPath() +"/chat.jsp");
         } catch (NameNotFoundException e) {
+            session.setAttribute("loginerror", new InvalidInputException().getMessage());
             e.printStackTrace();
             e.sendError();
             resp.sendRedirect(req.getContextPath() +"/index.jsp");
