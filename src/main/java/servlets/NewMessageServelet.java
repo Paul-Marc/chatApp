@@ -27,6 +27,11 @@ public class NewMessageServelet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() +"/chat.jsp");
             return;
         }
+        if (req.getParameter("newMessage").length() == 0 || req.getParameter("newMessage").equals("") ||
+            req.getParameter("newMessage") == null) {
+            resp.sendRedirect(req.getContextPath() +"/chat.jsp");
+            return;
+        }
         List<Message> messages = user.getMessages();
 
         if (messages == null) {

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet (name = "LoginServlet", value = "/servlets/Loginservlet")
 public class LoginServlet  extends HttpServlet {
@@ -23,8 +24,31 @@ public class LoginServlet  extends HttpServlet {
 
         User user = null;
         try {
-            user = Database.getUser(userName, pw);
-            session.setAttribute("user", user);
+
+            if(userName.length() > 0 && pw.length() > 0) {
+                try{
+                    user = Database.getUser(userName, pw);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("Das PW lautet:" + user.getPassword());
+                session.setAttribute("userpw",user.getPassword());
+                System.out.println(user.toString());
+                System.out.println(user.getBiography());
+                System.out.println(user.getDateOfBirth());
+                session.setAttribute("user", user);
+            } else {
+                System.out.println("Password oder Username ist zu kurz.");
+                resp.sendRedirect(req.getContextPath() +"/index.jsp");
+                return;
+
+            }
+
+
+
+
+
             resp.sendRedirect(req.getContextPath() +"/chat.jsp");
         } catch (NameNotFoundException e) {
             e.printStackTrace();

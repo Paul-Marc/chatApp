@@ -1,67 +1,57 @@
-#username_box, #password_box {
-    width: fit-content;
-    height: fit-content;
-    padding: 10px 10px 10px 10px;
+#login_form_container {
+    margin-top: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
-
+#login_form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    border: 3px solid lightcoral;
+    border-radius: 10px;
+    align-items: center;
+    background-color: white;
+}
 
 #registrieren_text {
-    font-family: "Times New Roman";
-    font-size: 20px;
-    font-weight: 300;
-    color: dimgray;
+    font-size: 14pt;
+    font-family: sans-serif;
 }
 
-#registrieren_text a {
-    text-decoration: none;
+#username_text {
+    font-size: 18pt;
+    font-family: monospace;
 }
 
-#login_form {
-    width: fit-content;
-    margin-top: 30vh;
-    margin-left: 40%;
-    background-color: lightgoldenrodyellow;
-    padding: 50px;
-    border: 5px solid lightcoral;
-    border-radius: 50px;
+#password_text {
+    font-size: 18pt;
+    font-family: monospace;
 }
 
-input {
-    height: 40px;
-    width: 400px;
-    border: 1px solid dimgray;
-    border-radius: 10px;
-    font-family: "Times New Roman";
-    font-size: 20px;
-    color: dimgray;
+#username_box {
+    width: 90%;
 }
 
-#username_text, #password_text {
-    font-size: 25px;
-    font-weight: bold;
-    color: dimgray;
-    font-family: "Times New Roman";
-}
-
-p {
-    margin: 5px;
-}
-
-body {
-    background-image: url("https://wallpaperaccess.com/full/2005054.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+#username_input {
     width: 100%;
 }
 
+
+#password_box {
+    width: 90%;
+}
+
+#password_input {
+    width: 100%;
+}
+
+
 #login_button {
-    height: 60px;
-    margin: 20px 0px 0px 10px;
-    border: 2px solid lightcoral;
-    font-weight: 900;
-    background-color: lightpink;
-    letter-spacing: 2px;
-    font-family: Arial;
+
+}
+
+
+body {
+    background-color: lightsalmon;
 }

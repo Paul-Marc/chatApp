@@ -14,15 +14,6 @@
 </head>
 <body>
 
-<<<<<<< HEAD
-<form action="servlets/RegisterServlet" method="post">
-    User Name: <input type="text" name="userName"> <br>
-    Password: <input type="password" name="password"> <br>
-    Repeat Password <input type="password" name="repeatPassword"> <br>
-    <input type="submit" value="Registrieren">
-
-</form>
-=======
 <div id="register_form">
     <form action="servlets/RegisterServlet" method="post">
         <div id="username_box"><p id="username_text">User Name:</p> <input type="text" name="userName"></div> <br>
@@ -34,7 +25,6 @@
     <p id="login_text">Du hast bereits einen Account? <a href="index.jsp">Hier Anmelden</a></p>
 
 </div>
->>>>>>> b17301ae0038f5ba1a5936c25a21cefbcd93888f
 
 </body>
 </html>

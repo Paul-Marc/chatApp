@@ -1,7 +1,7 @@
 package servlets;
 
 import databse.Database;
-import exceptions.CantChatWithYourSelveException;
+import exceptions.CantChatWithYourSelfException;
 import exceptions.ContactAlreadyExistsException;
 import exceptions.ContactNotFoundException;
 import exceptions.NameNotFoundException;
@@ -25,14 +25,17 @@ public class AddContactServlet extends HttpServlet {
         String memberName = req.getParameter("userName");
         if (user.getUserName().equals(memberName)) {
             try {
-                throw new CantChatWithYourSelveException();
-            } catch (CantChatWithYourSelveException e) {
+                throw new CantChatWithYourSelfException();
+            } catch (CantChatWithYourSelfException e) {
                 e.printStackTrace();
                 e.sendError();
                 resp.sendRedirect(req.getContextPath() + "/chat.jsp");
                 return;
             }
         }
+
+
+
         String[] member = {user.getUserName(), memberName};
         if (!user.contactAlreadyExists(memberName)) {
             if (!Database.addRoom(member)) {
