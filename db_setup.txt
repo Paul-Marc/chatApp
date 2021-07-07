@@ -1,26 +1,29 @@
 create table messages
 (
-    "messageid" serial    not null
+    messageid serial    not null
         constraint messages_pk
             primary key,
-    message     varchar   not null,
-    ownername   varchar   not null,
-    roomid      integer   not null,
-    time        timestamp not null
+    message   varchar   not null,
+    ownername varchar   not null,
+    roomid    integer   not null,
+    time      timestamp not null
 );
 
 alter table messages
     owner to postgres;
 
 create unique index messages_messageid_uindex
-    on messages ("messageid");
+    on messages (messageid);
+
 
 create table rooms
 (
-    roomid serial  not null
+    roomid    serial  not null
         constraint rooms_pk
             primary key,
-    member varchar not null
+    member    varchar not null,
+    chatgroup boolean,
+    groupname varchar
 );
 
 alter table rooms
@@ -29,13 +32,20 @@ alter table rooms
 create unique index rooms_roomid_uindex
     on rooms (roomid);
 
+
 create table users
 (
-    userid   serial  not null
+    userid         serial  not null
         constraint user_pk
             primary key,
-    username varchar not null,
-    password varchar not null
+    username       varchar not null,
+    password       varchar not null,
+    biography      varchar,
+    gender         varchar,
+    hobbies        varchar,
+    privateprofile boolean,
+    birthday       date,
+    nickname       varchar
 );
 
 alter table users
@@ -46,3 +56,5 @@ create unique index user_userid_uindex
 
 create unique index user_username_uindex
     on users (username);
+
+
