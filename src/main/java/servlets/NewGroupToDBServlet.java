@@ -2,6 +2,8 @@ package servlets;
 
 
 import databse.Database;
+import objects.Chat;
+import objects.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +25,7 @@ public class NewGroupToDBServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //Input lesen
+        User user = (User) req.getAttribute("user");
         String groupname = req.getParameter("group_name_input");
         String members = req.getParameter("group_members_input");
 
@@ -92,10 +95,6 @@ public class NewGroupToDBServlet extends HttpServlet {
             System.out.println("Ungueltiger Gruppenname oder Mitgliederzahl.");
         }
 
-
-
-
-        resp.sendRedirect(req.getContextPath() + "/chat.jsp");
-
+        Chat.openChat(user, req, resp);
     }
 }

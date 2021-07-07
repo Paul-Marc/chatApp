@@ -1,6 +1,7 @@
 package servlets;
 
 import exceptions.ContactNotFoundException;
+import objects.Chat;
 import objects.User;
 
 import javax.servlet.ServletException;
@@ -29,7 +30,6 @@ public class LoadContactServlet extends HttpServlet {
         }
 
         session.setAttribute("user", user);
-        resp.sendRedirect(req.getContextPath() + "/chat.jsp");
-
+        Chat.openChat(user, req, resp);
     }
 }

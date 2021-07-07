@@ -1,6 +1,7 @@
 package servlets;
 
 import databse.Database;
+import objects.Chat;
 import objects.Message;
 import objects.User;
 
@@ -24,12 +25,12 @@ public class NewMessageServelet extends HttpServlet {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         if (user == null) {
-            resp.sendRedirect(req.getContextPath() +"/chat.jsp");
+            Chat.openChat(user, req, resp);
             return;
         }
         if (req.getParameter("newMessage").length() == 0 || req.getParameter("newMessage").equals("") ||
             req.getParameter("newMessage") == null) {
-            resp.sendRedirect(req.getContextPath() +"/chat.jsp");
+            Chat.openChat(user, req, resp);
             return;
         }
         List<Message> messages = user.getMessages();
@@ -44,7 +45,7 @@ public class NewMessageServelet extends HttpServlet {
             Database.addMessage(newMessage);
         }
         session.setAttribute("user", user);
-        resp.sendRedirect(req.getContextPath() +"/chat.jsp");
+        Chat.openChat(user, req, resp);
     }
 
 }

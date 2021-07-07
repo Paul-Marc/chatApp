@@ -3,6 +3,7 @@ package servlets;
 
 import databse.Database;
 import exceptions.NameNotFoundException;
+import objects.Chat;
 import objects.User;
 
 import javax.servlet.ServletException;
@@ -63,11 +64,11 @@ public class UpdateProfileServlet extends HttpServlet{
         //Schreiben in Datenbank
             try {
                 System.out.println(Database.updateProfile(userBiography,userGender,userName,privatesProfil, birthdayDate));
-                resp.sendRedirect(req.getContextPath() + "/chat.jsp");
+                Chat.openChat(user, req, resp);
             } catch (Exception e) {
                 //Hier noch richtige Exception
                 e.printStackTrace();
-                resp.sendRedirect(req.getContextPath() + "/chat.jsp");
+                Chat.openChat(user, req, resp);
             }
 
     }

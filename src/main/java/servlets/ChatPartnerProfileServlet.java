@@ -2,6 +2,7 @@ package servlets;
 
 
 import databse.Database;
+import objects.Chat;
 import objects.User;
 
 import javax.servlet.ServletException;
@@ -57,7 +58,7 @@ public class ChatPartnerProfileServlet extends HttpServlet {
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            resp.sendRedirect(req.getContextPath() + "/chat.jsp");
+            Chat.openChat(user, req, resp);
             return;
         }
 

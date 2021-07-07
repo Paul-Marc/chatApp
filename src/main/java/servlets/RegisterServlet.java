@@ -2,6 +2,7 @@ package servlets;
 
 import databse.Database;
 import exceptions.NameNotFoundException;
+import objects.Chat;
 import objects.User;
 
 import javax.servlet.ServletException;
@@ -48,7 +49,7 @@ public class RegisterServlet extends HttpServlet {
                     System.out.println(Database.addUser(userName, password));
                     User user = Database.getUser(userName, password);
                     session.setAttribute("user", user);
-                    resp.sendRedirect(req.getContextPath() + "/chat.jsp");
+                    Chat.openChat(user, req, resp);
                 } else {
                     System.out.println("Das Password und der Username muessen laenger als 3 Zeichen sein.");
                     resp.sendRedirect(req.getContextPath() + "/register.jsp");

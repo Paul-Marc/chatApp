@@ -5,6 +5,7 @@ import exceptions.CantChatWithYourSelfException;
 import exceptions.ContactAlreadyExistsException;
 import exceptions.ContactNotFoundException;
 import exceptions.NameNotFoundException;
+import objects.Chat;
 import objects.User;
 
 import javax.servlet.ServletException;
@@ -29,12 +30,10 @@ public class AddContactServlet extends HttpServlet {
             } catch (CantChatWithYourSelfException e) {
                 e.printStackTrace();
                 e.sendError();
-                resp.sendRedirect(req.getContextPath() + "/chat.jsp");
+                Chat.openChat(user, req, resp);
                 return;
             }
         }
-
-
 
         String[] member = {user.getUserName(), memberName};
         if (!user.contactAlreadyExists(memberName)) {
@@ -64,6 +63,6 @@ public class AddContactServlet extends HttpServlet {
         }
 
         session.setAttribute("user", user);
-        resp.sendRedirect(req.getContextPath() + "/chat.jsp");
+        Chat.openChat(user, req, resp);
     }
 }

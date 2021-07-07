@@ -70,9 +70,9 @@ public class Database {
                     user.setGender(resultSet.getString("gender"));
                     user.setBiography(resultSet.getString("biography"));
                     user.setPrivateprofile(resultSet.getBoolean("privateprofile"));
+                    user.setContacts(getContacts(userName));
                     try{
                         user.setDateOfBirth(resultSet.getDate("birthday").toString());
-                        user.setContacts(getContacts(userName));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

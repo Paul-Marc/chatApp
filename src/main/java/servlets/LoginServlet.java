@@ -3,6 +3,7 @@ package servlets;
 import databse.Database;
 import exceptions.InvalidInputException;
 import exceptions.NameNotFoundException;
+import objects.Chat;
 import objects.User;
 
 import javax.servlet.ServletException;
@@ -50,16 +51,12 @@ public class LoginServlet  extends HttpServlet {
 
             }
 
-
-
-
-
-            resp.sendRedirect(req.getContextPath() +"/chat.jsp");
+            Chat.openChat(user, req, resp);
         } catch (NameNotFoundException e) {
             session.setAttribute("loginerror", new InvalidInputException().getMessage());
             e.printStackTrace();
             e.sendError();
-            resp.sendRedirect(req.getContextPath() +"/index.jsp");
+            Chat.openChat(user, req, resp);
         }
 
     }
