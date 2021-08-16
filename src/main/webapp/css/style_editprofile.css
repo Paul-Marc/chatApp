@@ -1,0 +1,72 @@
+/**
+ * Zuordnung zu Person: Paul Conrad
+ * 
+ * Zweck: Design zur Edit-Profile Seite
+ */
+body {
+    background-color: lightsalmon;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#editprofile_container {
+	margin-top: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+}
+
+#editProfileForm {
+	display: flex;
+    flex-direction: column;
+    width: 400px;
+    border: 3px solid lightcoral;
+    border-radius: 10px;
+    align-items: center;
+    background-color: white;
+    max-width: 100%;
+    padding-bottom: 10px;
+}
+
+#editprofile_button {
+	margin: 10px;
+    width: 90%;
+    height: 30px;
+    background-color: lightgoldenrodyellow;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+#goback_link, #changepw_link {
+	text-decoration: none;
+	color: black;
+}
+
+#goback_button, #changepw_button {
+	margin: 10px;
+    width: 400px;
+    max-width: 100%;
+    border-radius: 10px;
+    height: 30px;
+    background-color: lightgoldenrodyellow;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+#nickname_text, #username_text, #gender_text, #dateOfBirth_text, #privateprofile_text {
+	font-size: 14pt;
+	font-family: monospace;
+}
+
+.userinformation {
+	width: 90%;
+}
+
+
+#nickname_input, #bio_input, #gender_input, #birthday_input, #hobbie_input {
+	width: 100%;
+	height: 30px;
+	border: 1px solid gray;
+}

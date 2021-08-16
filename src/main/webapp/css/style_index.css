@@ -1,3 +1,12 @@
+/**
+ * Zuordnung zu Person: Paul Conrad
+ * 
+ * Zweck: Design zur Login/Index Seite
+ */
+body {
+    background-color: lightsalmon;
+}
+
 #login_form_container {
     margin-top: 30vh;
     display: flex;
@@ -18,7 +27,7 @@
 
 #registrieren_text {
     font-size: 14pt;
-    font-family: sans-serif;
+    font-family: monospace;
 }
 
 #username_text {
@@ -60,9 +69,4 @@
     background-color: lightgoldenrodyellow;
     border: 1px solid gray;
     cursor: pointer;
-}
-
-
-body {
-    background-color: lightsalmon;
 }

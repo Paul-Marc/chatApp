@@ -1,0 +1,57 @@
+/**
+ * Zuordnung zu Person: Paul Conrad
+ * 
+ * Zweck: Design zur Chatpartner Seite
+ */
+body {
+    background-color: lightsalmon;
+    padding: 0;
+    margin: 0;
+}
+
+#information_container {
+	margin-top: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+}
+
+#chatpartner_infos {
+	display: flex;
+    flex-direction: column;
+    width: 400px;
+    border: 3px solid lightcoral;
+    border-radius: 10px;
+    align-items: center;
+    background-color: white;
+    max-width: 100%;
+    padding-bottom: 10px;
+}
+
+#goback_link {
+	text-decoration: none;
+	color: black;
+	width:90%;
+}
+
+#goback_button {
+	margin: 10px;
+    width: 400px;
+    max-width: 90%;
+    border-radius: 10px;
+    height: 30px;
+    background-color: lightgoldenrodyellow;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+h2 {
+	font-size: 25pt;
+	font-family: monospace;
+}
+
+.info_text {
+	font-size: 15pt;
+	font-family: monospace;
+}

@@ -1,17 +1,32 @@
+/**
+ * Zuordnung zu Person: Paul Conrad
+ * 
+ * Zweck: Design zur Chat Seite
+ */
 body {
     width: 100%;
     height: 100%;
-    background-color: lightcoral;
+    background-color: lightsalmon;
     padding: 0;
     margin: 0;
 }
 
-h1 {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+table {
+	border-color: transparent;
 }
 
+h1 {    
+    text-align: center;
+    font-size: 25pt;
+    font-family: monospace;
+}
+
+h3 {
+	text-align: center;
+	font-size: 10pt;
+	font-family: monospace;
+	font-weight: 500;
+}
 tr, td {
     border: none;
     padding: 5px;
@@ -20,7 +35,7 @@ tr, td {
 .contact_button {
     width: 300px;
     height: 40px;
-    border: 3px solid lightskyblue;
+    border: 3px solid lightgoldenrodyellow;
     border-radius: 20px;
     font-weight: 900;
 }
@@ -33,21 +48,26 @@ tr, td {
 #content_box {
     display: flex;
     align-items: center;
+    margin-top: 3vh;
+    flex-wrap: wrap;
 }
 
 
 .chatBox {
     order: 1;
     flex-grow: 2;
+    max-width: 100%;
+}
+
+.contactBox {
+	max-width: 100%;
 }
 
 
 
 .messageTable {
     width: 70%;
-    height: 70vh;
-    border: 3px solid lightgoldenrodyellow;
-    border-radius: 20px 0px 0px 20px;
+    height: 70vh;        
     font-size: 20px;
     font-family: Arial;
     margin-left: auto;
@@ -61,6 +81,8 @@ tr, td {
     width: 70%;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    flex-direction: row;
 }
 
 .contactTable {
@@ -69,14 +91,14 @@ tr, td {
 
 #enter_a_new_massage {
     height: 30px;
-    width: 500px;
+    width: 100%;
     border-radius: 20px;
-    border: none;
-    margin-top: 5px;
+    border: 1px solid gray;
+    margin-top: 5px;  
 }
 
 
-#send_a_new_massage {
+#send_a_new_message {
     width: 200px;
     height: 30px;
     border-radius: 20px;
@@ -85,4 +107,24 @@ tr, td {
     font-size: 17px;
     font-weight: 600;
     font-family: Arial;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+
+#contact_list {
+	max-height: 70vh;
+	overflow: scroll;
+}
+
+
+#groupManagement{
+	display:flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	justify-content: space-between;
 }

@@ -1,38 +1,31 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Paul
-  Date: 21.06.2021
-  Time: 15:07
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!-- Zuordnung zur Person: Paul Conrad -->
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-    <title>Profil von ${user.getCurrentContact().getUserName()}</title>
+<title>QuickChat - Profil von
+	${user.getCurrentContact().getUserName()}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style_chatpartner.css">
+<link rel="stylesheet" href="css/style_navbar.css">
 </head>
 <body>
 
-
-<ul class="header_menu">
-
-    <li class="menu_item"><div class="addContactBox">
-        <form action="servlets/AddContactServlet">
-            <input type="text" name="userName">
-            <input type="submit" value="Kontakt Hinzufügen">
-        </form>
-    </div></li>
-    <li class="menu_item"><a href="chat.jsp">Zurück Zu Den Chats</a></li>
-    <li class="menu_item">Kein aktueller Chatpartner</li>
-    <li class="menu_item">Ausloggen</li>
-
-</ul>
+	<jsp:include page="navbar.jsp" />
 
 
-<h2>${chatpartner.getUserName()}</h2>
-<p>Biographie: ${chatpartner.getBiography()}</p>
-<p>Hobbies: ${chatpartner.getHobbies()}</p>
-<p>Gender: ${chatpartner.getGender()}</p>
-<p>Geburtsdatum: ${chatpartner.getDateOfBirth()}</p>
 
+	<div id="information_container">
+		<div id="chatpartner_infos">
+			<h2>${chatpartner.getUserName()}</h2>
+			<p class="info_text">Nickname: ${chatpartner.getNickname() }</p>
+			<p class="info_text">Biographie: ${chatpartner.getBiography()}</p>
+			<p class="info_text">Hobbies: ${chatpartner.getHobbies()}</p>
+			<p class="info_text">Gender: ${chatpartner.getGender()}</p>
+			<p class="info_text">Geburtsdatum:
+				${chatpartner.getDateOfBirth()}</p>
+			<a href="servlets/LoadChatsServlet" id="goback_link"><Button
+					id="goback_button">Zurück</Button></a>
+		</div>
+	</div>
 </body>
 </html>

@@ -3,7 +3,6 @@ package servlets;
 import databse.Database;
 import exceptions.InvalidInputException;
 import exceptions.NameNotFoundException;
-import objects.Chat;
 import objects.User;
 
 import javax.servlet.ServletException;
@@ -15,49 +14,65 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet (name = "LoginServlet", value = "/servlets/Loginservlet")
-public class LoginServlet  extends HttpServlet {
+/**
+ * Zuordnung zu Person: Marc Palfner
+ * 
+ * Zweck: Die Klasse bietet die Funktionalitaet damit sich ein bestehender
+ * Nutzer anmelden kann.
+ */
+@WebServlet(name = "LoginServlet", value = "/servlets/Loginservlet")
+public class LoginServlet extends HttpServlet {
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        String userName = req.getParameter("username");
-        String pw = req.getParameter("password");
+	/**
+	 * Name: doPost Zweck: Nimmt die Post-Anfrage entgegen und loggt den Nutzer ein
+	 * und schreibt ihn in die Session sofern die Nutzerdaten korrekt sind.
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        User user = null;
-        try {
+		// Session einlesen
+		HttpSession session = req.getSession();
 
-            if(userName.length() > 0 && pw.length() > 0) {
-                try{
-                    user = Database.getUser(userName, pw);
-                    System.out.println("Das PW lautet:" + user.getPassword());
-                    session.setAttribute("userpw",user.getPassword());
-                    System.out.println(user.toString());
-                    System.out.println(user.getBiography());
-                    System.out.println(user.getDateOfBirth());
-                    session.setAttribute("user", user);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    session.setAttribute("loginerror", new InvalidInputException().getMessage());
-                    resp.sendRedirect(req.getContextPath() +"/index.jsp");
-                    return;
-                }
+		// Nutzer eingaben entgegennehmen
+		String userName = req.getParameter("username");
+		String pw = req.getParameter("password");
 
+		User user = null;
+		try {
+			// Schauen ob Felder richtig ausgefuellt wurden
+			if (userName.length() > 0 && pw.length() > 0) {
+				try {
+					// Auf DB-Ebene schauen ob Nutzer gefunden wurde
+					user = Database.getUser(userName, pw);
 
-            } else {
-                session.setAttribute("loginerror", new InvalidInputException().getMessage());
-                resp.sendRedirect(req.getContextPath() +"/index.jsp");
-                return;
+					// Wenn gefunden dann einloggen und zu session hinzufuegen
+					session.setAttribute("userpw", user.getPassword());
+					session.setAttribute("user", user);
+				} catch (Exception e) {
+					// Nutzer wurde nicht gefunden bzw. fehlgeschlagene SQL-Abfrage
+					e.printStackTrace();
+					session.setAttribute("loginerror", new InvalidInputException().getMessage());
+					resp.sendRedirect(req.getContextPath() + "/index.jsp");
+					return;
+				}
 
-            }
+			} else {
+				// Felder sind leer
+				session.setAttribute("loginerror", new InvalidInputException().getMessage());
+				resp.sendRedirect(req.getContextPath() + "/index.jsp");
+				return;
 
-            Chat.openChat(user, req, resp);
-        } catch (NameNotFoundException e) {
-            session.setAttribute("loginerror", new InvalidInputException().getMessage());
-            e.printStackTrace();
-            e.sendError();
-            Chat.openChat(user, req, resp);
-        }
+			}
 
-    }
+			// Erfolgreiche Anmeldung => Weiterleiten zu Chats
+			resp.sendRedirect(req.getContextPath() + "/servlets/LoadChatsServlet");
+		} catch (NameNotFoundException e) {
+			// Fehler => vermutlich durch nicht gefundenen Nutzer
+			session.setAttribute("loginerror", new InvalidInputException().getMessage());
+			e.printStackTrace();
+			e.sendError();
+			resp.sendRedirect(req.getContextPath() + "/index.jsp");
+		}
+
+	}
 }

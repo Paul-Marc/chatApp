@@ -1,47 +1,45 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Paul
-  Date: 10.06.2021
-  Time: 11:07
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!-- Zuordnung zur Person: Paul Conrad -->
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-    <title>Edit Your Profile</title>
-    <link rel="stylesheet" href="css/style.css">
+<title>Edit Your Profile</title>
+<link rel="stylesheet" href="css/style_editprofile.css">
+<link rel="stylesheet" href="css/style_navbar.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 <body>
 
-<div class="header_bar">
+	<jsp:include page="navbar.jsp" />
 
-    <ul class="header_menu">
-
-        <li class="menu_item"><div class="addContactBox">
-            <form action="servlets/AddContactServlet">
-                <input type="text" name="userName">
-                <input type="submit" value="Kontakt Hinzufügen">
-            </form>
-        </div></li>
-        <li class="menu_item"><a href="chat.jsp">Zurück Zu Den Chats</a></li>
-        <li class="menu_item">Kein aktueller Chatpartner</li>
-        <li class="menu_item">Ausloggen</li>
-
-    </ul>
-
-
-
-
-
-</div>
-
-<form action="servlets/UpdateProfileServlet" method="post" id="editProfileForm">
-    <h2>${ user.getUserName() }</h2>
-    <div class="userinformation"><p id="username_text">Biographie:</p> <input type="text" name="user_biography" value="${ user.getBiography() }"></div> <br>
-    <div class="userinformation"><p id="password_text">Geschlecht: </p>
-        <select name="user_gender" id="user_gender_id" form="editProfileForm"><option selected="selected">Mann</option><option>Frau</option></select>
-        <script>
+	<div id="editprofile_container">
+		<form action="servlets/UpdateProfileServlet" method="post"
+			id="editProfileForm">
+			<h2>Eigenes Profil Bearbeiten</h2>
+			<div class="userinformation">
+				<p id="nickname_text">Spitzname:</p>
+				<input type="text" id="nickname_input" name="user_nickname"
+					value="${ user.getNickname() }">
+			</div>
+			<br>
+			<div class="userinformation">
+				<p id="username_text">Biographie:</p>
+				<input type="text" id="bio_input" name="user_biography"
+					value="${ user.getBiography() }">
+			</div>
+			<br>
+			<div class="userinformation">
+				<p id="hobbies_text">Hobbies:</p>
+				<input type="text" id="hobbie_input" name="user_hobbies"
+					value="${ user.getHobbies() }">
+			</div>
+			<br>
+			<div class="userinformation">
+				<p id="gender_text">Geschlecht:</p>
+				<select name="user_gender" id="gender_input" form="editProfileForm"><option
+						selected="selected">Mann</option>
+					<option>Frau</option></select>
+				<script>
             var temp = "${ user.getGender() }";
             var mySelect = document.getElementById("user_gender_id");
             for (var i, j = 0; i = mySelect.options[j]; j++) {
@@ -51,10 +49,21 @@
                 }
             }
         </script>
-    </div> <br>
-    <div class="userinformation"> <p id="repeat_password_text">Geburtsdatum: </p> <input type="date" name="user_date_of_birth" value="${ user.getDateOfBirth() }"></div> <br>
-    <div class="userinformation"> <p>Privates Profil:</p><input type="checkbox" id="private_profile_id" checked name="private_profile_checkbox" value="private_profile"></div> <br>
-    <script>
+			</div>
+			<br>
+			<div class="userinformation">
+				<p id="dateOfBirth_text">Geburtsdatum:</p>
+				<input type="date" id="birthday_input" name="user_date_of_birth"
+					value="${ user.getDateOfBirth() }">
+			</div>
+			<br>
+			<div class="userinformation">
+				<p id="privateprofile_text">Privates Profil:</p>
+				<input type="checkbox" id="privateprofile_input" checked
+					name="private_profile_checkbox" value="private_profile">
+			</div>
+			<br>
+			<script>
         var privateOrNot = new String(${ user.isPrivateprofile() });
         if (privateOrNot == "false") {
             document.getElementById("private_profile_id").checked = false;
@@ -62,11 +71,17 @@
             document.getElementById("private_profile_id").checked = true;
         }
     </script>
-    <input id="editprofile_button" type="submit" value="Speichern & Weiterleiten">
+			<input id="editprofile_button" type="submit"
+				value="Speichern & Weiterleiten">
+			<p style="color: darkred">${ editprofileerror }</p>
 
-</form>
+		</form>
 
-<button><a href="changepw.jsp">Passwort Ändern</a></button>
+		<a href="changepw.jsp" id="changepw_link"><button
+				id="changepw_button">Passwort Aendern</button></a> <a
+			href="servlets/LoadChatsServlet" id="goback_link"><Button
+				id="goback_button">Zurück</Button></a>
+	</div>
 
 
 

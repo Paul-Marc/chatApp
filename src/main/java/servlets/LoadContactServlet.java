@@ -1,7 +1,6 @@
 package servlets;
 
 import exceptions.ContactNotFoundException;
-import objects.Chat;
 import objects.User;
 
 import javax.servlet.ServletException;
@@ -12,24 +11,45 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Zuordnung zu Person: Marc Palfner
+ * 
+ * Zweck: Mit dieser Klasse kann ein bestehender Kontakt/bzw. das Chatfenster
+ * geladen werden.
+ */
 @WebServlet(name = "LoadContactServlet", value = "/servlets/LoadContactServlet")
 public class LoadContactServlet extends HttpServlet {
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
-        int roomID = Integer.parseInt(req.getParameter("roomid"));
-        if (!user.setCurrentContact(roomID)) {
-            try {
-                throw new ContactNotFoundException();
-            } catch (ContactNotFoundException e) {
-                e.printStackTrace();
-                e.sendError();
-            }
-        }
+	/**
+	 * Name: doPost Zweck: Nimmt die Post-Anfrage entgegen und versucht einen
+	 * anderen Kontakt ins Chatfenster zu bekommen
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        session.setAttribute("user", user);
-        Chat.openChat(user, req, resp);
-    }
+		// Session und user-objekt entgegennehmen
+		HttpSession session = req.getSession();
+		User user = (User) session.getAttribute("user");
+
+		session.setAttribute("addcontacterror", "");
+
+		// Room id einlesen
+		int roomID = Integer.parseInt(req.getParameter("roomid"));
+
+		// Roomid zum aktuellen Kontakt machen
+		if (!user.setCurrentContact(roomID)) {
+			try {
+				throw new ContactNotFoundException();
+			} catch (ContactNotFoundException e) {
+				// Fehler beim neuen Kontakt laden
+				e.printStackTrace();
+				e.sendError();
+			}
+		}
+
+		// Weiterleitung
+		session.setAttribute("user", user);
+		resp.sendRedirect(req.getContextPath() + "/servlets/LoadChatsServlet");
+
+	}
 }
